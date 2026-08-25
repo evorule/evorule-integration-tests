@@ -1,0 +1,15 @@
+[package]
+name = "evorule-integration-tests"
+version = "0.1.0"
+edition = "2021"
+license = "AGPL-3.0-or-later"
+description = "Cross-repo BLAKE3 consistency gate for the EvoRule ecosystem (hash SSOT alignment)"
+
+# 跨仓联动测试闸门：验证 evorule-hash 字节级等价于冻结仓 evorule-reactor 的 BLAKE3 原语，
+# 且 evorule-bundle 正确消费 evorule-hash。本 crate 不依赖冻结仓（reactor/governance），
+# 仅通过 blake3 crate 直接复算对照，证明「审计链在 BLAKE3 迁移后不断裂」。
+[dependencies]
+evorule-hash = { path = "../evorule-hash" }
+evorule-bundle = { path = "../evorule-bundle" }
+blake3 = "1"
+serde_json = "1"
