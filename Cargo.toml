@@ -3,6 +3,7 @@ name = "evorule-integration-tests"
 version = "0.1.0"
 edition = "2021"
 license = "AGPL-3.0-or-later"
+publish = false
 description = "Cross-repo BLAKE3 consistency gate for the EvoRule ecosystem (hash SSOT alignment)"
 
 # 跨仓联动测试闸门：验证 evorule-hash 字节级等价于冻结仓 evorule-reactor 的 BLAKE3 原语，
