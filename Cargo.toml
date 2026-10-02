@@ -12,5 +12,7 @@ description = "Cross-repo BLAKE3 consistency gate for the EvoRule ecosystem (has
 [dependencies]
 evorule-hash = { path = "../evorule-hash" }
 evorule-bundle = { path = "../evorule-bundle" }
+evorule-llm-context-inspector = { path = "../evorule-context-inspector" }
 blake3 = "1"
 serde_json = "1"
+uuid = { version = "1", features = ["v4"] }
