@@ -10,7 +10,7 @@
 
 use blake3;
 use evorule_bundle::{
-    BundleAudit, BundleDatasetMeta, BundleEntry, BundleTests, BUNDLE_SCHEMA_VERSION, DatasetBundle,
+    BundleAudit, BundleDatasetMeta, BundleEntry, BundleTests, BUNDLE_SCHEMA_VERSION, DatasetBundle, EntryKind,
     Provenance, TestVerdict, Versioning,
 };
 use evorule_hash;
@@ -89,9 +89,12 @@ fn bundle_consumes_evorule_hash() {
             version_selection: None,
             law_ref: None,
             view_of: None,
+            event_schemas: vec![],
         },
         entries: vec![BundleEntry {
             entry_id: "e1".into(),
+            entry_kind: EntryKind::Rule,
+            schema_ref: None,
             rule_body: json!({"transform": [{"type": "set", "params": {"attr": "x", "value": 1}}]}),
             provenance: Provenance {
                 source: "itest-source".into(),
