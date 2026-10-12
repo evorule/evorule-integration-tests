@@ -108,6 +108,11 @@ fn bundle_consumes_evorule_hash() {
             domain: "d".into(),
             tags: vec![],
             dependencies: vec![],
+            // 知识资产化字段（bundle 0.4.0）：None 不序列化，content_hash 字节不变
+            knowledge_kind: None,
+            trust_level: None,
+            license_ref: None,
+            execution_contract: None,
         }],
         data_dependencies: None,
         tests: BundleTests {
@@ -122,6 +127,8 @@ fn bundle_consumes_evorule_hash() {
             content_hash: String::new(),
             hash_algo: "blake3".into(),
         },
+        // 策略快照（bundle 0.5.0）：None 不序列化，content_hash 字节不变
+        recipe_snapshot: None,
     };
 
     let h = b.compute_content_hash();
