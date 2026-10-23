@@ -7,8 +7,10 @@ publish = false
 description = "Cross-repo BLAKE3 consistency gate for the EvoRule ecosystem (hash SSOT alignment)"
 
 # 跨仓联动测试闸门：验证 evorule-hash 字节级等价于冻结仓 evorule-reactor 的 BLAKE3 原语，
-# 且 evorule-bundle 正确消费 evorule-hash。本 crate 不依赖冻结仓（reactor/governance），
-# 仅通过 blake3 crate 直接复算对照，证明「审计链在 BLAKE3 迁移后不断裂」。
+# 且 evorule-bundle 正确消费 evorule-hash，证明「审计链在 BLAKE3 迁移后不断裂」。
+# 依赖边界（诚实口径）：本 crate 的**直接**依赖仅 evorule-hash / evorule-bundle /
+# evorule-llm-context-inspector / blake3；但冻结仓（reactor/governance）会经
+# inspector 的 path 依赖**传递进入依赖图**——「不依赖冻结仓」只在直接依赖层面成立。
 [dependencies]
 evorule-hash = { path = "../evorule-hash" }
 evorule-bundle = { path = "../evorule-bundle" }
