@@ -8,13 +8,21 @@ description = "Cross-repo BLAKE3 consistency gate for the EvoRule ecosystem (has
 
 # 跨仓联动测试闸门：验证 evorule-hash 字节级等价于冻结仓 evorule-reactor 的 BLAKE3 原语，
 # 且 evorule-bundle 正确消费 evorule-hash，证明「审计链在 BLAKE3 迁移后不断裂」。
-# 依赖边界（诚实口径）：本 crate 的**直接**依赖仅 evorule-hash / evorule-bundle /
-# evorule-llm-context-inspector / blake3；但冻结仓（reactor/governance）会经
-# inspector 的 path 依赖**传递进入依赖图**——「不依赖冻结仓」只在直接依赖层面成立。
+# 依赖边界（诚实口径）：基础直接依赖为 evorule-hash / evorule-bundle /
+# evorule-llm-context-inspector / blake3；冻结仓（reactor/governance）经 inspector
+# 的 path 依赖传递进入依赖图。server 副本对账闸门（ssot_fact_contract_gate）追加：
+# - evorule-audit-chain + evorule-tcb（均 path 锁主仓正身）：SSOT 侧活体复算；
+# - 副本冻结黄金向量经 include_str! 跨仓读取兄弟检出布局
+#   ../evorule-server/patches/evorule-reactor/tests/fixtures/（副本侧自证闸门在
+#   server 仓 CI；本仓在 bundle 仓 cross-repo-gates 跑）。
+# 活体双端依赖图（同图引入 vendored evorule-reactor 0.8.4）经实证不可行：双 reactor
+# 同名 lib 构建产物互相覆盖（cargo#6313 同族），副本侧改以冻结向量形态对账。
 [dependencies]
 evorule-hash = { path = "../evorule-hash" }
 evorule-bundle = { path = "../evorule-bundle" }
 evorule-llm-context-inspector = { path = "../evorule-context-inspector" }
+evorule-audit-chain = { path = "../evorule/evorule-audit-chain" }
+evorule-tcb = { path = "../evorule/evorule-tcb" }
 blake3 = "1"
 serde_json = "1"
 uuid = { version = "1", features = ["v4"] }
