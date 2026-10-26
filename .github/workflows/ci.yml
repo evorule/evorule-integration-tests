@@ -1,5 +1,8 @@
 # ci.yml — minimal CI for evorule-integration-tests: ecosystem license gate only.
 # Calls the shared reusable workflow pinned to a root-repo commit (never @main).
+# extra-checkouts floats the four path-dependency sibling repos at their default
+# branch (this repo is the cross-repo consistency gate; its semantics track the
+# ecosystem tip, and with no Cargo.lock CI already resolves the latest graph).
 name: ci
 
 on:
@@ -15,4 +18,6 @@ jobs:
     name: license gate
     permissions:
       contents: read
-    uses: evorule/evorule/.github/workflows/license-gate.yml@9d0e4fdbb28cfd0db1051c9014149f198b290e6b
+    uses: evorule/evorule/.github/workflows/license-gate.yml@cd6230d67bade689b453d7be384947093a37d5da
+    with:
+      extra-checkouts: "evorule-hash@main evorule-bundle@main evorule-context-inspector@main evorule@main"
