@@ -21,3 +21,30 @@ jobs:
     uses: evorule/evorule/.github/workflows/license-gate.yml@203b1d5cde3d81814292d600f6ce8238b11af222
     with:
       extra-checkouts: "evorule-hash@main evorule-bundle@main evorule-context-inspector@main evorule@main"
+
+  # Cross-repo alignment gate: the console-cloud TS pre-validator is a
+  # hand-maintained replica of the server _shared schema enums/regex. This job
+  # compares both at the ecosystem tip (same floating-sibling convention as the
+  # extra-checkouts above) so drift turns red here instead of silently
+  # diverging. Checks: domain enum, meta-instruction whitelist (dispatch set
+  # minus enforce), set operation enum, path pattern.
+  ts-validator-alignment:
+    name: ts validator alignment (console-cloud vs server _shared)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: checkout evorule-server
+        uses: actions/checkout@v4
+        with:
+          repository: evorule/evorule-server
+          path: evorule-server
+      - name: checkout evorule-console-cloud
+        uses: actions/checkout@v4
+        with:
+          repository: evorule/evorule-console-cloud
+          path: evorule-console-cloud
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: compare TS validator constants with authoritative _shared schema
+        run: node scripts/check_ts_validator_alignment.mjs evorule-server evorule-console-cloud
