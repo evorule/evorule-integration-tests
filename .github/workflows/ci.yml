@@ -18,6 +18,6 @@ jobs:
     name: license gate
     permissions:
       contents: read
-    uses: evorule/evorule/.github/workflows/license-gate.yml@cd6230d67bade689b453d7be384947093a37d5da
+    uses: evorule/evorule/.github/workflows/license-gate.yml@203b1d5cde3d81814292d600f6ce8238b11af222
     with:
       extra-checkouts: "evorule-hash@main evorule-bundle@main evorule-context-inspector@main evorule@main"
