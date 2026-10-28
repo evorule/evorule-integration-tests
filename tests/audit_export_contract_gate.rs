@@ -4,8 +4,8 @@
 
 //! 审计导出契约对账闸门（SSOT 侧棘轮，EVID 移动端验证器预演）
 //!
-//! （对账物）server 仓冻结黄金向量 `patches/evorule-governance/tests/fixtures/
-//! audit_export_golden.json`：由 server vendored governance 副本 `Auditor::export()`
+//! （对账物）server 仓冻结黄金向量 `core/governance-host/tests/fixtures/
+//! audit_export_golden.json`：由 server 原生 crate governance-host `Auditor::export()`
 //! 生成（自证闸门在 server 仓 CI），本闸经 include_str! 跨仓读取（兄弟检出布局，
 //! CI 由 evorule-bundle 仓 cross-repo-gates 提供），SSOT 侧（evorule-audit-chain）
 //! 活体复算后逐条比对。
@@ -110,7 +110,7 @@ const SAMPLE_LABELS: [&str; 11] = [
 #[test]
 fn audit_export_contract_ssot_matches_frozen_vendored_golden() {
     const GOLDEN: &str = include_str!(
-        "../../evorule-server/patches/evorule-governance/tests/fixtures/audit_export_golden.json"
+        "../../evorule-server/core/governance-host/tests/fixtures/audit_export_golden.json"
     );
     let fx: serde_json::Value = serde_json::from_str(GOLDEN).expect("黄金向量文件非法 JSON");
     let export = &fx["export"];
