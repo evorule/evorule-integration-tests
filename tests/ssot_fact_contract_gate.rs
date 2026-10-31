@@ -98,7 +98,7 @@ fn make_fact(label: &str) -> ssot::fact::Fact {
 #[test]
 fn fact_contract_ssot_matches_frozen_vendored_golden() {
     const GOLDEN: &str = include_str!(
-        "../../evorule-server/patches/evorule-reactor/tests/fixtures/ssot_fact_contract_golden.json"
+        "fixtures/ssot_fact_contract_golden.json"
     );
     let fx: serde_json::Value = serde_json::from_str(GOLDEN).expect("黄金向量文件非法 JSON");
     let arr = fx["samples"].as_array().expect("黄金向量缺 samples 数组");
