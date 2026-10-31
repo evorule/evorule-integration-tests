@@ -129,6 +129,8 @@ fn bundle_consumes_evorule_hash() {
         },
         // 策略快照（bundle 0.5.0）：None 不序列化，content_hash 字节不变
         recipe_snapshot: None,
+        // 发布签名（bundle 0.6.2）：None 不序列化且不参与内容哈希
+        publish_signature: None,
     };
 
     let h = b.compute_content_hash();
