@@ -10,8 +10,8 @@
 
 use blake3;
 use evorule_bundle::{
-    BundleAudit, BundleDatasetMeta, BundleEntry, BundleTests, BUNDLE_SCHEMA_VERSION, DatasetBundle, EntryKind,
-    Provenance, TestVerdict, Versioning,
+    BundleAudit, BundleDatasetMeta, BundleEntry, BundleTests, BUNDLE_SCHEMA_VERSION, DatasetBundle,
+    DatasetKind, EntryKind, Provenance, TestVerdict, Versioning,
 };
 use evorule_hash;
 use serde_json::json;
@@ -85,6 +85,8 @@ fn bundle_consumes_evorule_hash() {
             name: "itest".into(),
             tenant_id: "org-evorule".into(),
             instance_id: "org-evorule".into(),
+            // bundle 0.8.0 起 dataset_kind 为必备判别字段（规则载荷 → rule_set）
+            dataset_kind: DatasetKind::RuleSet,
             versioning: Versioning::default(),
             version_selection: None,
             law_ref: None,
