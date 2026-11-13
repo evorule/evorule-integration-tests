@@ -60,6 +60,14 @@ confidence-threshold = 0.93
 [advisories]
 version = 2
 yanked = "warn"
+ignore = [
+    # RUSTSEC-2026-0459（2026-11-13 treadmill 追加，与 rule 2026-11-10 / server 2026-11-09
+    #   同裁定对齐）：libsqlite3-sys 捆绑 SQLite CVE-2026-119375（vulnerability）；
+    #   修复版 >=0.39.0 属大版本且要求 rusqlite 0.41（MSRV 1.89），依赖方 rusqlite 0.32.1
+    #   为外部 crate 钉死（与 rule/server workspace 对齐），本地无单仓升级路径；
+    #   待 rusqlite 0.41 跟进后随版解除（双仓对齐升级批，evo-agent 0.41.1 已有先例）。
+    "RUSTSEC-2026-0459",
+]
 # （2026-10-28 顺手摘除已失效的 RUSTSEC-2026-0110 豁免：advisory DB 中已无匹配；
 #   该 advisory 的实际 package 是 bare-metal，本仓依赖树不含 bare-metal/cortex-m。）
 
